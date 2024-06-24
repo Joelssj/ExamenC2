@@ -1,0 +1,396 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Grammar
+
+Rule 0     S' -> programa
+Rule 1     programa -> declaraciones DO bloque ENDDO WHILE LPAREN condicion RPAREN ENDWHILE
+Rule 2     declaraciones -> declaraciones declaracion
+Rule 3     declaraciones -> declaracion
+Rule 4     declaracion -> INT ID ASSIGN NUMBER SEMICOLON
+Rule 5     bloque -> bloque sentencia
+Rule 6     bloque -> sentencia
+Rule 7     sentencia -> ID ASSIGN expresion SEMICOLON
+Rule 8     expresion -> termino
+Rule 9     expresion -> termino PLUS termino
+Rule 10    termino -> factor
+Rule 11    termino -> factor TIMES factor
+Rule 12    factor -> NUMBER
+Rule 13    factor -> ID
+Rule 14    condicion -> tipo ID EQUALS NUMBER
+Rule 15    condicion -> ID EQUALS NUMBER
+Rule 16    tipo -> INT
+
+Terminals, with rules where they appear
+
+ASSIGN               : 4 7
+DO                   : 1
+ENDDO                : 1
+ENDWHILE             : 1
+EQUALS               : 14 15
+ID                   : 4 7 13 14 15
+INT                  : 4 16
+LPAREN               : 1
+NUMBER               : 4 12 14 15
+PLUS                 : 9
+RPAREN               : 1
+SEMICOLON            : 4 7
+TIMES                : 11
+WHILE                : 1
+error                : 
+
+Nonterminals, with rules where they appear
+
+bloque               : 1 5
+condicion            : 1
+declaracion          : 2 3
+declaraciones        : 1 2
+expresion            : 7
+factor               : 10 11 11
+programa             : 0
+sentencia            : 5 6
+termino              : 8 9 9
+tipo                 : 14
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . programa
+    (1) programa -> . declaraciones DO bloque ENDDO WHILE LPAREN condicion RPAREN ENDWHILE
+    (2) declaraciones -> . declaraciones declaracion
+    (3) declaraciones -> . declaracion
+    (4) declaracion -> . INT ID ASSIGN NUMBER SEMICOLON
+
+    INT             shift and go to state 4
+
+    programa                       shift and go to state 1
+    declaraciones                  shift and go to state 2
+    declaracion                    shift and go to state 3
+
+state 1
+
+    (0) S' -> programa .
+
+
+
+state 2
+
+    (1) programa -> declaraciones . DO bloque ENDDO WHILE LPAREN condicion RPAREN ENDWHILE
+    (2) declaraciones -> declaraciones . declaracion
+    (4) declaracion -> . INT ID ASSIGN NUMBER SEMICOLON
+
+    DO              shift and go to state 5
+    INT             shift and go to state 4
+
+    declaracion                    shift and go to state 6
+
+state 3
+
+    (3) declaraciones -> declaracion .
+
+    DO              reduce using rule 3 (declaraciones -> declaracion .)
+    INT             reduce using rule 3 (declaraciones -> declaracion .)
+
+
+state 4
+
+    (4) declaracion -> INT . ID ASSIGN NUMBER SEMICOLON
+
+    ID              shift and go to state 7
+
+
+state 5
+
+    (1) programa -> declaraciones DO . bloque ENDDO WHILE LPAREN condicion RPAREN ENDWHILE
+    (5) bloque -> . bloque sentencia
+    (6) bloque -> . sentencia
+    (7) sentencia -> . ID ASSIGN expresion SEMICOLON
+
+    ID              shift and go to state 10
+
+    bloque                         shift and go to state 8
+    sentencia                      shift and go to state 9
+
+state 6
+
+    (2) declaraciones -> declaraciones declaracion .
+
+    DO              reduce using rule 2 (declaraciones -> declaraciones declaracion .)
+    INT             reduce using rule 2 (declaraciones -> declaraciones declaracion .)
+
+
+state 7
+
+    (4) declaracion -> INT ID . ASSIGN NUMBER SEMICOLON
+
+    ASSIGN          shift and go to state 11
+
+
+state 8
+
+    (1) programa -> declaraciones DO bloque . ENDDO WHILE LPAREN condicion RPAREN ENDWHILE
+    (5) bloque -> bloque . sentencia
+    (7) sentencia -> . ID ASSIGN expresion SEMICOLON
+
+    ENDDO           shift and go to state 12
+    ID              shift and go to state 10
+
+    sentencia                      shift and go to state 13
+
+state 9
+
+    (6) bloque -> sentencia .
+
+    ENDDO           reduce using rule 6 (bloque -> sentencia .)
+    ID              reduce using rule 6 (bloque -> sentencia .)
+
+
+state 10
+
+    (7) sentencia -> ID . ASSIGN expresion SEMICOLON
+
+    ASSIGN          shift and go to state 14
+
+
+state 11
+
+    (4) declaracion -> INT ID ASSIGN . NUMBER SEMICOLON
+
+    NUMBER          shift and go to state 15
+
+
+state 12
+
+    (1) programa -> declaraciones DO bloque ENDDO . WHILE LPAREN condicion RPAREN ENDWHILE
+
+    WHILE           shift and go to state 16
+
+
+state 13
+
+    (5) bloque -> bloque sentencia .
+
+    ENDDO           reduce using rule 5 (bloque -> bloque sentencia .)
+    ID              reduce using rule 5 (bloque -> bloque sentencia .)
+
+
+state 14
+
+    (7) sentencia -> ID ASSIGN . expresion SEMICOLON
+    (8) expresion -> . termino
+    (9) expresion -> . termino PLUS termino
+    (10) termino -> . factor
+    (11) termino -> . factor TIMES factor
+    (12) factor -> . NUMBER
+    (13) factor -> . ID
+
+    NUMBER          shift and go to state 21
+    ID              shift and go to state 17
+
+    expresion                      shift and go to state 18
+    termino                        shift and go to state 19
+    factor                         shift and go to state 20
+
+state 15
+
+    (4) declaracion -> INT ID ASSIGN NUMBER . SEMICOLON
+
+    SEMICOLON       shift and go to state 22
+
+
+state 16
+
+    (1) programa -> declaraciones DO bloque ENDDO WHILE . LPAREN condicion RPAREN ENDWHILE
+
+    LPAREN          shift and go to state 23
+
+
+state 17
+
+    (13) factor -> ID .
+
+    TIMES           reduce using rule 13 (factor -> ID .)
+    PLUS            reduce using rule 13 (factor -> ID .)
+    SEMICOLON       reduce using rule 13 (factor -> ID .)
+
+
+state 18
+
+    (7) sentencia -> ID ASSIGN expresion . SEMICOLON
+
+    SEMICOLON       shift and go to state 24
+
+
+state 19
+
+    (8) expresion -> termino .
+    (9) expresion -> termino . PLUS termino
+
+    SEMICOLON       reduce using rule 8 (expresion -> termino .)
+    PLUS            shift and go to state 25
+
+
+state 20
+
+    (10) termino -> factor .
+    (11) termino -> factor . TIMES factor
+
+    PLUS            reduce using rule 10 (termino -> factor .)
+    SEMICOLON       reduce using rule 10 (termino -> factor .)
+    TIMES           shift and go to state 26
+
+
+state 21
+
+    (12) factor -> NUMBER .
+
+    TIMES           reduce using rule 12 (factor -> NUMBER .)
+    PLUS            reduce using rule 12 (factor -> NUMBER .)
+    SEMICOLON       reduce using rule 12 (factor -> NUMBER .)
+
+
+state 22
+
+    (4) declaracion -> INT ID ASSIGN NUMBER SEMICOLON .
+
+    DO              reduce using rule 4 (declaracion -> INT ID ASSIGN NUMBER SEMICOLON .)
+    INT             reduce using rule 4 (declaracion -> INT ID ASSIGN NUMBER SEMICOLON .)
+
+
+state 23
+
+    (1) programa -> declaraciones DO bloque ENDDO WHILE LPAREN . condicion RPAREN ENDWHILE
+    (14) condicion -> . tipo ID EQUALS NUMBER
+    (15) condicion -> . ID EQUALS NUMBER
+    (16) tipo -> . INT
+
+    ID              shift and go to state 29
+    INT             shift and go to state 30
+
+    condicion                      shift and go to state 27
+    tipo                           shift and go to state 28
+
+state 24
+
+    (7) sentencia -> ID ASSIGN expresion SEMICOLON .
+
+    ENDDO           reduce using rule 7 (sentencia -> ID ASSIGN expresion SEMICOLON .)
+    ID              reduce using rule 7 (sentencia -> ID ASSIGN expresion SEMICOLON .)
+
+
+state 25
+
+    (9) expresion -> termino PLUS . termino
+    (10) termino -> . factor
+    (11) termino -> . factor TIMES factor
+    (12) factor -> . NUMBER
+    (13) factor -> . ID
+
+    NUMBER          shift and go to state 21
+    ID              shift and go to state 17
+
+    termino                        shift and go to state 31
+    factor                         shift and go to state 20
+
+state 26
+
+    (11) termino -> factor TIMES . factor
+    (12) factor -> . NUMBER
+    (13) factor -> . ID
+
+    NUMBER          shift and go to state 21
+    ID              shift and go to state 17
+
+    factor                         shift and go to state 32
+
+state 27
+
+    (1) programa -> declaraciones DO bloque ENDDO WHILE LPAREN condicion . RPAREN ENDWHILE
+
+    RPAREN          shift and go to state 33
+
+
+state 28
+
+    (14) condicion -> tipo . ID EQUALS NUMBER
+
+    ID              shift and go to state 34
+
+
+state 29
+
+    (15) condicion -> ID . EQUALS NUMBER
+
+    EQUALS          shift and go to state 35
+
+
+state 30
+
+    (16) tipo -> INT .
+
+    ID              reduce using rule 16 (tipo -> INT .)
+
+
+state 31
+
+    (9) expresion -> termino PLUS termino .
+
+    SEMICOLON       reduce using rule 9 (expresion -> termino PLUS termino .)
+
+
+state 32
+
+    (11) termino -> factor TIMES factor .
+
+    PLUS            reduce using rule 11 (termino -> factor TIMES factor .)
+    SEMICOLON       reduce using rule 11 (termino -> factor TIMES factor .)
+
+
+state 33
+
+    (1) programa -> declaraciones DO bloque ENDDO WHILE LPAREN condicion RPAREN . ENDWHILE
+
+    ENDWHILE        shift and go to state 36
+
+
+state 34
+
+    (14) condicion -> tipo ID . EQUALS NUMBER
+
+    EQUALS          shift and go to state 37
+
+
+state 35
+
+    (15) condicion -> ID EQUALS . NUMBER
+
+    NUMBER          shift and go to state 38
+
+
+state 36
+
+    (1) programa -> declaraciones DO bloque ENDDO WHILE LPAREN condicion RPAREN ENDWHILE .
+
+    $end            reduce using rule 1 (programa -> declaraciones DO bloque ENDDO WHILE LPAREN condicion RPAREN ENDWHILE .)
+
+
+state 37
+
+    (14) condicion -> tipo ID EQUALS . NUMBER
+
+    NUMBER          shift and go to state 39
+
+
+state 38
+
+    (15) condicion -> ID EQUALS NUMBER .
+
+    RPAREN          reduce using rule 15 (condicion -> ID EQUALS NUMBER .)
+
+
+state 39
+
+    (14) condicion -> tipo ID EQUALS NUMBER .
+
+    RPAREN          reduce using rule 14 (condicion -> tipo ID EQUALS NUMBER .)
+
